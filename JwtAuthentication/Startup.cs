@@ -38,7 +38,7 @@ namespace JwtAuthentication
         option =>
         {
             option.Password.RequireDigit = false;
-            option.Password.RequiredLength = 6;
+            option.Password.RequiredLength = 3;
             option.Password.RequireNonAlphanumeric = false;
             option.Password.RequireUppercase = false;
             option.Password.RequireLowercase = false;
@@ -64,6 +64,8 @@ namespace JwtAuthentication
             });
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
+
+            services.AddCors();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -77,7 +79,11 @@ namespace JwtAuthentication
             {
                 app.UseHsts();
             }
-
+            app.UseCors(builder =>
+            builder.WithOrigins("http://localhost:4200")
+            .AllowAnyHeader()
+            .AllowAnyMethod()
+            );
             app.UseHttpsRedirection();
             app.UseAuthentication();
             app.UseMvc();

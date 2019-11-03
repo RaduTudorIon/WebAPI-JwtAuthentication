@@ -6,6 +6,7 @@ using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
 using JwtAuthentication.ViewModels;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -74,5 +75,14 @@ namespace JwtAuthentication.Controllers
             }
             return Unauthorized();
         }
+
+        [Route("string")]
+        [HttpGet]
+        [Authorize]
+        public ActionResult<IEnumerable<string>> GetUserString()
+        {
+            return new string[] { "Hello World" };
+        }
+
     }
 }
